@@ -1,22 +1,10 @@
-public class ForagerAnt {
+public class ForagerAnt extends Ant {
 
-    private int x;
-    private int y;
-    private int speed;
-    private Colony homeColony;
     private boolean carryingFood;
 
     public ForagerAnt(int x, int y, int speed, Colony homeColony) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.homeColony = homeColony;
+        super(x, y, speed, homeColony);
         this.carryingFood = false;
-    }
-
-    public void move(int dx, int dy) {
-        x += dx * speed;
-        y += dy * speed;
     }
 
     public void pickUpFood(FoodSource food) {
@@ -31,14 +19,6 @@ public class ForagerAnt {
             homeColony.depositFood(5);
             carryingFood = false;
         }
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     @Override

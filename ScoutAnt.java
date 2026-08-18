@@ -1,36 +1,21 @@
-public class ScoutAnt {
+public class ScoutAnt extends Ant {
 
-    private int x;
-    private int y;
-    private int speed;
-    private Colony homeColony;
     private int tilesExplored;
 
     public ScoutAnt(int x, int y, int speed, Colony homeColony) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.homeColony = homeColony;
+        super(x, y, speed, homeColony);
         this.tilesExplored = 0;
     }
 
+    @Override
     public void move(int dx, int dy) {
-        x += dx * speed;
-        y += dy * speed;
+      super.move(dx, dy);
         tilesExplored++;
     }
 
     public void reportFindings() {
         System.out.println("Scout reports " + tilesExplored + " tiles explored to colony at ("
                 + homeColony.getX() + "," + homeColony.getY() + ")");
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     @Override
