@@ -23,6 +23,7 @@ public class FoodSource {
     /*
      * Removes the food from source.
      * Only takes as much food as available (will never go negative).
+     * If food source is depleted we throw a DepletedFoodException.
      */
     public int take(int amount) throws DepletedFoodException {
 

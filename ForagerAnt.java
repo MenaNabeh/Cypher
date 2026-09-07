@@ -16,6 +16,8 @@ public class ForagerAnt extends Ant {
     /*
      * Attempts to pick up food from a food source.
      * Takes up to 5 units if available.
+     * 
+     * If the food source is depleted, a message is printed to the console.
      */
     public void pickUpFood(FoodSource food) {
         try {
@@ -28,6 +30,7 @@ public class ForagerAnt extends Ant {
         }
     }
 
+    // Lets other code check if the ant is carrying food.
     public boolean isCarryingFood() {
         return carryingFood;
     }
