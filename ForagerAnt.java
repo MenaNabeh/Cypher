@@ -1,30 +1,34 @@
 //A Forager Ant collects food and brings it back to the colony.
 public class ForagerAnt extends Ant {
 
-    //Checks whether the ant is currently carrying food.
+    // Checks whether the ant is currently carrying food.
     private boolean carryingFood;
 
     /*
-        Creates a forager ant starting at a position,
-         with a speed and a home colony.
-    */
+     * Creates a forager ant starting at a position,
+     * with a speed and a home colony.
+     */
     public ForagerAnt(int x, int y, int speed, Colony homeColony) {
         super(x, y, speed, homeColony);
         this.carryingFood = false;
     }
 
     /*
-        Attempts to pick up food from a food source. 
-        Takes up to 5 units if available. 
-    */
+     * Attempts to pick up food from a food source.
+     * Takes up to 5 units if available.
+     */
     public void pickUpFood(FoodSource food) {
-        int taken = food.take(5);
-        if (taken > 0) {
-            carryingFood = true;
+        try {
+            int taken = food.take(5);
+            if (taken > 0) {
+                carryingFood = true;
+            }
+        } catch (DepletedFoodException e) {
+            System.out.println(this + " found nothing: " + e.getMessage());
         }
     }
 
-    //Returns food to the colony if carrying any.
+    // Returns food to the colony if carrying any.
     public void returnToColony() {
         if (carryingFood) {
             homeColony.depositFood(5);
@@ -32,7 +36,7 @@ public class ForagerAnt extends Ant {
         }
     }
 
-    //Shows forager ant details.
+    // Shows forager ant details.
     @Override
     public String toString() {
         return "ForagerAnt at (" + x + "," + y + ") carryingFood=" + carryingFood;
