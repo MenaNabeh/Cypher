@@ -24,10 +24,9 @@ public class SimulationPanel extends JPanel implements ActionListener {
         foods.add(new FoodSource(300, 100, 15));
 
         // Add ants to the simulation
-        ants.add(new ForagerAnt(200, 200, 2, colony));
-        ants.add(new ForagerAnt(200, 200, 2, colony));
-        ants.add(new ScoutAnt(200, 200, 3, colony));
-
+        for (int i = 0; i < 20; i++) {
+            ants.add(new ForagerAnt(200, 200, 2, colony));
+        }
         // Trigger an update every 100 milliseconds
         timer = new Timer(100, this);
         timer.start();
@@ -38,8 +37,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (Ant ant : ants) {
             // Move ants in a small random direction
-            int dx = (int)(Math.random() * 5) - 2;
-            int dy = (int)(Math.random() * 5) - 2;
+            int dx = (int) (Math.random() * 5) - 2;
+            int dy = (int) (Math.random() * 5) - 2;
             ant.move(dx, dy);
 
             // Logic specific to worker ants collecting/depositing food
