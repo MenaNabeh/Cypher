@@ -28,6 +28,10 @@ public class ForagerAnt extends Ant {
         }
     }
 
+    public boolean isCarryingFood() {
+        return carryingFood;
+    }
+
     // Returns food to the colony if carrying any.
     public void returnToColony() {
         if (carryingFood) {
