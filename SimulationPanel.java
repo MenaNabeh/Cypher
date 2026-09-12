@@ -8,11 +8,20 @@ import java.util.List;
 // Panel that handles updating and rendering the ant simulation
 public class SimulationPanel extends JPanel implements ActionListener {
 
+    private static List<Pheromone> pheromones = new ArrayList<>();
+
     // Lists using Generics to hold ants and food sources
     private List<Ant> ants = new ArrayList<>();
     private List<FoodSource> foods = new ArrayList<>();
     private Colony colony;
+
+    //Timer for simulation
     private Timer timer;
+
+    //Allow ants to drop pheromones
+    public static void addPheromone(Pheromone p){
+        pheromones.add(p);
+    }
 
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
@@ -31,10 +40,35 @@ public class SimulationPanel extends JPanel implements ActionListener {
         timer = new Timer(100, this);
         timer.start();
     }
+    public static Pheromone getStrongestNearby(int x, int y) {
+        Pheromone strongest = null;
+        double bestStrength =0;
+
+        for(Pheromone p : pheromones){
+            int dx = Math.abs(p.getX() - x);
+            int dy = Math.abs(p.getY() - y);
+
+            //Only consider pheromones within a 40px radius 
+            if(dx < 40 && dy < 40){
+                if(p.getStrength() > bestStrength){
+                    bestStrength = p.getStrength();
+                    strongest = p; 
+                }
+            }
+        }
+
+        return strongest;
+    }
+
 
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
+        for(Pheromone p: pheromones){
+            p.decay();
+        }
+        pheromones.removeIf(Pheromone :: isWeak);
+        
         for (Ant ant : ants) {
 
             ant.update(); // Movement is now from strategy
@@ -81,6 +115,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
             if (!f.isDepleted()) {
                 g.fillOval(f.getX(), f.getY(), 15, 15);
             }
+        }
+        // Draw pheromones (very faint red)
+        g.setColor(new Color(255, 0, 0, 15));
+        for (Pheromone p : pheromones) {
+            int size = (int)(10 * p.getStrength());
+            g.fillOval(p.getX(), p.getY(), size, size);
         }
 
         // Draw ants as small black dots

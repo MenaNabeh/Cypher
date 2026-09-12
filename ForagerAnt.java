@@ -42,6 +42,21 @@ public class ForagerAnt extends Ant {
             carryingFood = false;
         }
     }
+    
+    @Override
+    public void update(){
+
+        //Switch strategy based on carrying food
+        if(carryingFood){
+            setStrategy(new PheromoneFollowing());
+        } else{
+            setStrategy(new RandomMovement());
+        }
+
+        strategy.move(this);
+
+        SimulationPanel.addPheromone(new Pheromone(x,y));
+    }
 
     // Shows forager ant details.
     @Override
