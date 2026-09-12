@@ -36,14 +36,17 @@ public class SimulationPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Ant ant : ants) {
+
+            ant.update(); // Movement is now from strategy
+            /*
             // Move ants in a small random direction
             int dx = (int) (Math.random() * 5) - 2;
             int dy = (int) (Math.random() * 5) - 2;
             ant.move(dx, dy);
+            */
 
             // Logic specific to worker ants collecting/depositing food
-            if (ant instanceof ForagerAnt) {
-                ForagerAnt forager = (ForagerAnt) ant;
+            if (ant instanceof ForagerAnt forager) {
 
                 // Pick up food if close to a source
                 for (FoodSource food : foods) {

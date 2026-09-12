@@ -14,6 +14,8 @@ public abstract class Ant implements Entity {
     //The colony this ant belongs to
     protected Colony homeColony;
 
+    protected MovementStrategy strategy = new RandomMovement();
+
     //Sets up an ant with a starting position, speed, and home colony. 
     public Ant(int x, int y, int speed, Colony homeColony) {
         this.x = x;
@@ -28,6 +30,10 @@ public abstract class Ant implements Entity {
         y += dy * speed;
     }
 
+    public void setStrategy(MovementStrategy strategy) {
+        this.strategy = strategy;
+    }
+
     //Returns the ants current X position.
    public int getX() {
         return x;
@@ -40,6 +46,6 @@ public abstract class Ant implements Entity {
 
     @Override
     public void update(){
-        //Just a placeholder for future plans of development (the movement is still driven by SimulationPanel for now)
+        strategy.move(this);
     }
 }
