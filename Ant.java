@@ -2,7 +2,7 @@
     Ant is an Abstract class. 
     It provides shared properties and behaviours for all types of ants.
 */
-public abstract class Ant {
+public abstract class Ant implements Entity {
 
     //The ant's current position on the grid
     protected int x;
@@ -38,4 +38,8 @@ public abstract class Ant {
         return y;
     }
 
+    @Override
+    public void update(){
+        //Just a placeholder for future plans of development (the movement is still driven by SimulationPanel for now)
+    }
 }
