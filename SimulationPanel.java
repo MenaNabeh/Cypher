@@ -117,6 +117,9 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
                                 toRemove.add(scout);
                                 toAdd.add(newAnt);
+
+                                System.out.println("Scout collected food and became a Forager!");
+
                             }
                         }catch(DepletedFoodException ignored){}
                     }
