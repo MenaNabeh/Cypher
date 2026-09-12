@@ -42,6 +42,11 @@ public class SimulationPanel extends JPanel implements ActionListener {
             ants.add(new ScoutAnt(200,200,2,colony));
         }
 
+        //Add one queen ant 
+        // Add one queen
+        ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
+
+
         // Trigger an update every 100 milliseconds
         timer = new Timer(100, this);
         timer.start();
