@@ -162,11 +162,20 @@ public class SimulationPanel extends JPanel implements ActionListener {
             g.fillOval(p.getX(), p.getY(), size, size);
         }
 
-        // Draw ants as small black dots
-        g.setColor(Color.BLACK);
         for (Ant ant : ants) {
+            if (ant instanceof ForagerAnt) {
+                g.setColor(Color.BLACK);
+            } else if (ant instanceof ScoutAnt) {
+                g.setColor(Color.BLUE);
+            } else if (ant instanceof QueenAnt) {
+                g.setColor(new Color(128, 0, 128)); // purple queen
+            } else {
+                g.setColor(Color.GRAY);
+            }
+
             g.fillOval(ant.getX(), ant.getY(), 6, 6);
         }
+
     }
 
     // Program entry point: Creates window and adds panel
