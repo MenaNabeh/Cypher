@@ -32,6 +32,11 @@ public class SimulationPanel extends JPanel implements ActionListener {
         timer.start();
     }
 
+    public static Pheromone getStrongestNearby(int x, int y) {
+        return null;
+    }
+
+
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
