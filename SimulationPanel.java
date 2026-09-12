@@ -64,6 +64,11 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
+        for(Pheromone p: pheromones){
+            p.decay();
+        }
+        pheromones.removeIf(Pheromone :: isWeak);
+        
         for (Ant ant : ants) {
 
             ant.update(); // Movement is now from strategy
@@ -110,6 +115,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
             if (!f.isDepleted()) {
                 g.fillOval(f.getX(), f.getY(), 15, 15);
             }
+        }
+        // Draw pheromones (very faint red)
+        g.setColor(new Color(255, 0, 0, 15));
+        for (Pheromone p : pheromones) {
+            int size = (int)(10 * p.getStrength());
+            g.fillOval(p.getX(), p.getY(), size, size);
         }
 
         // Draw ants as small black dots
