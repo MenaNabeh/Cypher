@@ -8,11 +8,20 @@ import java.util.List;
 // Panel that handles updating and rendering the ant simulation
 public class SimulationPanel extends JPanel implements ActionListener {
 
+    private static List<Pheromone> pheromones = new ArrayList<>();
+
     // Lists using Generics to hold ants and food sources
     private List<Ant> ants = new ArrayList<>();
     private List<FoodSource> foods = new ArrayList<>();
     private Colony colony;
+
+    //Timer for simulation
     private Timer timer;
+
+    //Allow ants to drop pheromones
+    public static void addPheromone(Pheromone p){
+        pheromones.add(p);
+    }
 
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
@@ -31,9 +40,24 @@ public class SimulationPanel extends JPanel implements ActionListener {
         timer = new Timer(100, this);
         timer.start();
     }
-
     public static Pheromone getStrongestNearby(int x, int y) {
-        return null;
+        Pheromone strongest = null;
+        double bestStrength =0;
+
+        for(Pheromone p : pheromones){
+            int dx = Math.abs(p.getX() - x);
+            int dy = Math.abs(p.getY() - y);
+
+            //Only consider pheromones within a 40px radius 
+            if(dx < 40 && dy < 40){
+                if(p.getStrength() > bestStrength){
+                    bestStrength = p.getStrength();
+                    strongest = p; 
+                }
+            }
+        }
+
+        return strongest;
     }
 
 
