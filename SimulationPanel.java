@@ -32,10 +32,16 @@ public class SimulationPanel extends JPanel implements ActionListener {
         foods.add(new FoodSource(100, 100, 10));
         foods.add(new FoodSource(300, 100, 15));
 
-        // Add ants to the simulation
+        // Add forager ants to the simulation
         for (int i = 0; i < 20; i++) {
             ants.add(new ForagerAnt(200, 200, 2, colony));
         }
+
+        //Add scout ants to the simulation 
+        for(int i =0; i<5; i++){
+            ants.add(new ScoutAnt(200,200,2,colony));
+        }
+
         // Trigger an update every 100 milliseconds
         timer = new Timer(100, this);
         timer.start();
