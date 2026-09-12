@@ -75,17 +75,15 @@ public class SimulationPanel extends JPanel implements ActionListener {
         }
         pheromones.removeIf(Pheromone :: isWeak);
         
+        List<Ant> toAdd = new ArrayList<>();
+        List<Ant> toRemove = new ArrayList<>();
+
         for (Ant ant : ants) {
 
             ant.update(); // Movement is now from strategy
-            /*
-            // Move ants in a small random direction
-            int dx = (int) (Math.random() * 5) - 2;
-            int dy = (int) (Math.random() * 5) - 2;
-            ant.move(dx, dy);
-            */
+            
 
-            // Logic specific to worker ants collecting/depositing food
+            // Logic specific to forager ants collecting/depositing food
             if (ant instanceof ForagerAnt forager) {
 
                 // Pick up food if close to a source
@@ -100,7 +98,34 @@ public class SimulationPanel extends JPanel implements ActionListener {
                     forager.returnToColony();
                 }
             }
+
+            //Scout Logic
+            if(ant instanceof ScoutAnt scout){
+                for(FoodSource food : foods){
+                    if(Math.abs(scout.getX() - food.getX())<15 && Math.abs(scout.getY() - food.getY())<15){
+                        try{
+                            int taken = food.take(5);
+
+                            if(taken > 0){
+                                //Placeholder transformation for now 
+                                Ant newAnt = new ForagerAnt(
+                                    scout.getX(),
+                                    scout.getY(),
+                                    scout.speed,
+                                    colony
+                                );
+
+                                toRemove.add(scout);
+                                toAdd.add(newAnt);
+                            }
+                        }catch(DepletedFoodException ignored){}
+                    }
+                }
+            }
         }
+        ants.removeAll(toRemove);
+        ants.addAll(toAdd);
+
         // Redraw screen after updates
         repaint();
     }
