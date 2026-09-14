@@ -21,7 +21,7 @@ public class ForagerAnt extends Ant {
      */
     public void pickUpFood(FoodSource food) {
         try {
-            int taken = food.take(5);
+            int taken = food.take(1);
             if (taken > 0) {
                 carryingFood = true;
             }
@@ -38,24 +38,24 @@ public class ForagerAnt extends Ant {
     // Returns food to the colony if carrying any.
     public void returnToColony() {
         if (carryingFood) {
-            homeColony.depositFood(5);
+            homeColony.depositFood(1);
             carryingFood = false;
         }
     }
-    
-    @Override
-    public void update(){
 
-        //Switch strategy based on carrying food
-        if(carryingFood){
+    @Override
+    public void update() {
+
+        // Switch strategy based on carrying food
+        if (carryingFood) {
             setStrategy(new PheromoneFollowing());
-        } else{
+        } else {
             setStrategy(new RandomMovement());
         }
 
         strategy.move(this);
 
-        SimulationPanel.addPheromone(new Pheromone(x,y));
+        SimulationPanel.addPheromone(new Pheromone(x, y));
     }
 
     // Shows forager ant details.
