@@ -23,6 +23,13 @@ public class SimulationPanel extends JPanel implements ActionListener {
         pheromones.add(p);
     }
 
+    // updates the speed of all ants in the simulation
+    public void setAllAntSpeed(int speed) {
+        for (Ant ant : ants) {
+            ant.setSpeed(speed);
+        }
+    }
+
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
         setBackground(Color.WHITE);
@@ -175,11 +182,22 @@ public class SimulationPanel extends JPanel implements ActionListener {
         JFrame frame = new JFrame("Ant Colony Simulation");
         SimulationPanel panel = new SimulationPanel();
 
+        // BorderLayout so simulation sits in the center and controls on the right
         frame.setLayout(new BorderLayout());
         frame.add(panel, BorderLayout.CENTER);
 
+        // Control panel for adjusting controls
         JPanel controlPanel = new JPanel();
-        controlPanel.add(new JLabel("Controls go here"));
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+
+        // Slider to adjust ant speed
+        JLabel speedLabel = new JLabel("Set Ant Speed:");
+        JSlider speedSlider = new JSlider(1, 5, 2);
+        speedSlider.addChangeListener(e -> panel.setAllAntSpeed(speedSlider.getValue()));
+
+        // Add controls into frame
+        controlPanel.add(speedLabel);
+        controlPanel.add(speedSlider);
         frame.add(controlPanel, BorderLayout.EAST);
 
         frame.setSize(550, 400);

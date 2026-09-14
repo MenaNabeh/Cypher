@@ -4,19 +4,19 @@
 */
 public abstract class Ant implements Entity {
 
-    //The ant's current position on the grid
+    // The ant's current position on the grid
     protected int x;
     protected int y;
 
-    //How fast the ant moves
+    // How fast the ant moves
     protected int speed;
 
-    //The colony this ant belongs to
+    // The colony this ant belongs to
     protected Colony homeColony;
 
     protected MovementStrategy strategy = new RandomMovement();
 
-    //Sets up an ant with a starting position, speed, and home colony. 
+    // Sets up an ant with a starting position, speed, and home colony.
     public Ant(int x, int y, int speed, Colony homeColony) {
         this.x = x;
         this.y = y;
@@ -24,7 +24,7 @@ public abstract class Ant implements Entity {
         this.homeColony = homeColony;
     }
 
-    //Moves the ant by dx, dy multiplied by its speed.
+    // Moves the ant by dx, dy multiplied by its speed.
     public void move(int dx, int dy) {
         x += dx * speed;
         y += dy * speed;
@@ -34,18 +34,24 @@ public abstract class Ant implements Entity {
         this.strategy = strategy;
     }
 
-    //Returns the ants current X position.
-   public int getX() {
+    // Returns the ants current X position.
+    public int getX() {
         return x;
     }
 
-    //Returns the ants current Y position
+    // Returns the ants current Y position
     public int getY() {
         return y;
     }
 
+    // Sets the speed of the ant.
+    public int setSpeed(int speed) {
+        this.speed = speed;
+        return speed;
+    }
+
     @Override
-    public void update(){
+    public void update() {
         strategy.move(this);
     }
 }
