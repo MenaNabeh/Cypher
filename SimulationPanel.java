@@ -30,24 +30,28 @@ public class SimulationPanel extends JPanel implements ActionListener {
         }
     }
 
-    // Sets up the colony, food, ants, and starts the timer
-    public SimulationPanel() {
-        setBackground(Color.WHITE);
+    // resets the simulation to its initial state
+    public void resetSimulation(int antCount) {
+        ants.clear();
+        foods.clear();
+        pheromones.clear();
 
-        // Place colony and food sources on the screen
         colony = new Colony(200, 200);
         foods.add(new FoodSource(100, 100, 10));
         foods.add(new FoodSource(300, 100, 15));
 
-        // Add forager ants to the simulation
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < antCount; i++) {
             ants.add(new ForagerAnt(200, 200, 4, colony));
         }
-
-        // Add scout ants to the simulation
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < antCount; i++) {
             ants.add(new ScoutAnt(200, 200, 4, colony));
         }
+    }
+
+    // Sets up the colony, food, ants, and starts the timer
+    public SimulationPanel() {
+        setBackground(Color.WHITE);
+        resetSimulation(20);
 
         // Trigger an update every 100 milliseconds
         timer = new Timer(100, this);
@@ -195,9 +199,20 @@ public class SimulationPanel extends JPanel implements ActionListener {
         JSlider speedSlider = new JSlider(1, 5, 2);
         speedSlider.addChangeListener(e -> panel.setAllAntSpeed(speedSlider.getValue()));
 
+        // Slider to adjust Number of ants
+        JLabel antCountLabel = new JLabel("Number of Ants:");
+        JSlider antCountSlider = new JSlider(1, 40, 20);
+
+        // Reset button to reset simulation
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> panel.resetSimulation(antCountSlider.getValue()));
+
         // Add controls into frame
         controlPanel.add(speedLabel);
         controlPanel.add(speedSlider);
+        controlPanel.add(antCountLabel);
+        controlPanel.add(antCountSlider);
+        controlPanel.add(resetButton);
         frame.add(controlPanel, BorderLayout.EAST);
 
         frame.setSize(550, 400);
