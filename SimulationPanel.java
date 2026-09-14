@@ -15,11 +15,11 @@ public class SimulationPanel extends JPanel implements ActionListener {
     private List<FoodSource> foods = new ArrayList<>();
     private Colony colony;
 
-    //Timer for simulation
+    // Timer for simulation
     private Timer timer;
 
-    //Allow ants to drop pheromones
-    public static void addPheromone(Pheromone p){
+    // Allow ants to drop pheromones
+    public static void addPheromone(Pheromone p) {
         pheromones.add(p);
     }
 
@@ -34,31 +34,32 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
         // Add forager ants to the simulation
         for (int i = 0; i < 20; i++) {
-            ants.add(new ForagerAnt(200, 200, 2, colony));
+            ants.add(new ForagerAnt(200, 200, 4, colony));
         }
 
-        //Add scout ants to the simulation 
-        for(int i =0; i<5; i++){
-            ants.add(new ScoutAnt(200,200,2,colony));
+        // Add scout ants to the simulation
+        for (int i = 0; i < 5; i++) {
+            ants.add(new ScoutAnt(200, 200, 4, colony));
         }
 
         // Trigger an update every 100 milliseconds
         timer = new Timer(100, this);
         timer.start();
     }
+
     public static Pheromone getStrongestNearby(int x, int y) {
         Pheromone strongest = null;
-        double bestStrength =0;
+        double bestStrength = 0;
 
-        for(Pheromone p : pheromones){
+        for (Pheromone p : pheromones) {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
 
-            //Only consider pheromones within a 40px radius 
-            if(dx < 40 && dy < 40){
-                if(p.getStrength() > bestStrength){
+            // Only consider pheromones within a 40px radius
+            if (dx < 40 && dy < 40) {
+                if (p.getStrength() > bestStrength) {
                     bestStrength = p.getStrength();
-                    strongest = p; 
+                    strongest = p;
                 }
             }
         }
@@ -66,22 +67,20 @@ public class SimulationPanel extends JPanel implements ActionListener {
         return strongest;
     }
 
-
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(Pheromone p: pheromones){
+        for (Pheromone p : pheromones) {
             p.decay();
         }
-        pheromones.removeIf(Pheromone :: isWeak);
-        
+        pheromones.removeIf(Pheromone::isWeak);
+
         List<Ant> toAdd = new ArrayList<>();
         List<Ant> toRemove = new ArrayList<>();
 
         for (Ant ant : ants) {
 
             ant.update(); // Movement is now from strategy
-            
 
             // Logic specific to forager ants collecting/depositing food
             if (ant instanceof ForagerAnt forager) {
@@ -99,21 +98,20 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 }
             }
 
-            //Scout Logic
-            if(ant instanceof ScoutAnt scout){
-                for(FoodSource food : foods){
-                    if(Math.abs(scout.getX() - food.getX())<15 && Math.abs(scout.getY() - food.getY())<15){
-                        try{
+            // Scout Logic
+            if (ant instanceof ScoutAnt scout) {
+                for (FoodSource food : foods) {
+                    if (Math.abs(scout.getX() - food.getX()) < 15 && Math.abs(scout.getY() - food.getY()) < 15) {
+                        try {
                             int taken = food.take(5);
 
-                            if(taken > 0){
-                                //Placeholder transformation for now 
+                            if (taken > 0) {
+                                // Placeholder transformation for now
                                 Ant newAnt = new ForagerAnt(
-                                    scout.getX(),
-                                    scout.getY(),
-                                    scout.speed,
-                                    colony
-                                );
+                                        scout.getX(),
+                                        scout.getY(),
+                                        scout.speed,
+                                        colony);
 
                                 toRemove.add(scout);
                                 toAdd.add(newAnt);
@@ -121,7 +119,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
                                 System.out.println("Scout collected food and became a Forager!");
 
                             }
-                        }catch(DepletedFoodException ignored){}
+                        } catch (DepletedFoodException ignored) {
+                        }
                     }
                 }
             }
@@ -150,10 +149,17 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.fillOval(f.getX(), f.getY(), 15, 15);
             }
         }
+
+        g.setColor(Color.BLACK);
+        for (FoodSource f : foods) {
+            if (!f.isDepleted()) {
+                g.drawString(String.valueOf(f.getAmountRemaining()), f.getX(), f.getY() - 3);
+            }
+        }
         // Draw pheromones (very faint red)
         g.setColor(new Color(255, 0, 0, 15));
         for (Pheromone p : pheromones) {
-            int size = (int)(10 * p.getStrength());
+            int size = (int) (10 * p.getStrength());
             g.fillOval(p.getX(), p.getY(), size, size);
         }
 

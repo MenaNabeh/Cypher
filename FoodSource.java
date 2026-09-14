@@ -52,4 +52,9 @@ public class FoodSource {
     public String toString() {
         return "FoodSource at (" + x + "," + y + ") remaining=" + amountRemaining;
     }
+
+    // Lets the other files check to see how much food is left.
+    public int getAmountRemaining() {
+        return amountRemaining;
+    }
 }
