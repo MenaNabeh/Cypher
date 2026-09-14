@@ -149,7 +149,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.fillOval(f.getX(), f.getY(), 15, 15);
             }
         }
-
+        // Label showing how much food is left at each source.
         g.setColor(Color.BLACK);
         for (FoodSource f : foods) {
             if (!f.isDepleted()) {
@@ -174,8 +174,15 @@ public class SimulationPanel extends JPanel implements ActionListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Ant Colony Simulation");
         SimulationPanel panel = new SimulationPanel();
-        frame.add(panel);
-        frame.setSize(400, 400);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(panel, BorderLayout.CENTER);
+
+        JPanel controlPanel = new JPanel();
+        controlPanel.add(new JLabel("Controls go here"));
+        frame.add(controlPanel, BorderLayout.EAST);
+
+        frame.setSize(550, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
