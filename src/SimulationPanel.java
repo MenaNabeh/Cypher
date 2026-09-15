@@ -71,8 +71,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
 
-            // Only consider pheromones within a 50px radius
-            if (dx < 50 && dy < 50) {
+            // Only consider pheromones within a 30px radius
+            if (dx < 30 && dy < 30) {
                 if (p.getStrength() > bestStrength) {
                     bestStrength = p.getStrength();
                     strongest = p;
@@ -203,7 +203,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 int y = f.getY();
                 int size = 30; // Increased overall size
 
-                // 1. Back triangle
+                // Back triangle
                 g.setColor(new Color(230, 175, 115));
                 int[] backX = {x - 4, x + size + 4, x + (size / 2)};
                 int[] backY = {y + size + 4, y + size + 4, y - 2};
@@ -231,7 +231,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
             }
         }
         // Draw pheromones (very faint red)
-        g.setColor(new Color(255, 0, 0, 15));
+        g.setColor(new Color(90, 20, 120, 50));
         for (Pheromone p : pheromones) {
             int size = (int) (10 * p.getStrength());
             g.fillOval(p.getX(), p.getY(), size, size);
