@@ -106,12 +106,21 @@ public class SimulationPanel extends JPanel implements ActionListener {
                     if (Math.abs(forager.getX() - food.getX()) < 15 && Math.abs(forager.getY() - food.getY()) < 15) {
                         forager.pickUpFood(food);
                     }
+
                 }
 
                 // Deposit food if close to home colony
                 if (Math.abs(forager.getX() - colony.getX()) < 15 && Math.abs(forager.getY() - colony.getY()) < 15) {
                     forager.returnToColony();
+                    if (!forager.isCarryingFood()) {
+                        // Convert forager back into scout
+                        Ant newScout = new ScoutAnt(forager.getX(), forager.getY(), forager.speed, colony);
+                        toRemove.add(forager);
+                        toAdd.add(newScout);
+}
+
                 }
+                
             }
 
             // Scout Logic
@@ -210,8 +219,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.setColor(new Color(130, 25, 20));
                 int spotSize = 8;
                 g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize);             // Top spot near upper tip
-                g.fillOval(x + 5, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
-                g.fillOval(x + size - 13, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
+                g.fillOval(x + 3, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
+                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
                 }
         }
         // Label showing how much food is left at each source.

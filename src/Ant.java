@@ -52,6 +52,8 @@ public abstract class Ant implements Entity {
 
     @Override
     public void update() {
+        // All ants leave a weak pheromone trail
+        SimulationPanel.addPheromone(new Pheromone(x, y, 0.3));
         strategy.move(this);
     }       
 }
