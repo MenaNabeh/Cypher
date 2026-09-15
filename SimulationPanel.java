@@ -1,9 +1,9 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 // Panel that handles updating and rendering the ant simulation
 public class SimulationPanel extends JPanel implements ActionListener {
@@ -143,6 +143,16 @@ public class SimulationPanel extends JPanel implements ActionListener {
         }
         ants.removeAll(toRemove);
         ants.addAll(toAdd);
+
+        // replace any depleted food sources with a new food source else where
+        int removedCount = foods.size();
+        foods.removeIf(FoodSource::isDepleted);
+        removedCount -= foods.size();
+        for (int i = 0; i < removedCount; i++) {
+            int newX = 50 + (int)(Math.random() * 300);
+            int newY = 50 + (int)(Math.random() * 300);
+            foods.add(new FoodSource(newX, newY, 10));
+        }
 
         // Redraw screen after updates
         repaint();
