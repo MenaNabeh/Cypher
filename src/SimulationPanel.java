@@ -163,9 +163,28 @@ public class SimulationPanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Draw colony as a blue square and display current food count
-        g.setColor(Color.BLUE);
-        g.fillRect(colony.getX(), colony.getY(), 20, 20);
+        // Draw colony as nested brown squares (Mound / Nest look)
+        int cx = colony.getX();
+        int cy = colony.getY();
+
+        // Layer 1: Largest Outer Boundary (40x40) -> offset: (20 - 40) / 2 = -10
+        g.setColor(new Color(50, 30, 10));
+        g.fillRect(cx - 10, cy - 10, 40, 40);
+
+        // Layer 2: Outer Base (30x30) -> offset: (20 - 30) / 2 = -5
+        g.setColor(new Color(80, 50, 20));
+        g.fillRect(cx - 5, cy - 5, 30, 30);
+
+        // Layer 3: Middle Ring (20x20) -> offset: (20 - 20) / 2 = 0
+        g.setColor(new Color(130, 85, 40));
+        g.fillRect(cx, cy, 20, 20);
+
+        // Layer 4: Inner Core (10x10) -> offset: (20 - 10) / 2 = +5
+        g.setColor(new Color(190, 140, 80));
+        g.fillRect(cx + 5, cy + 5, 10, 10);
+
+        // Display current food count text
+        g.setColor(Color.BLACK);
         g.drawString("Colony Food Stored: " + colony.getFoodStored(), 10, 20);
 
         // Draw active food sources as green circles
