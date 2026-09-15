@@ -239,7 +239,34 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.setColor(Color.GRAY);
             }
 
-            g.fillOval(ant.getX(), ant.getY(), 6, 6);
+            int x = ant.getX();
+            int y = ant.getY();
+
+            // 1. Head
+            g.fillRect(x + 2, y, 4, 3);
+
+            // 2. Middle Body
+            g.fillRect(x + 1, y + 4, 6, 5);
+
+            // 3. End Body
+            g.fillRect(x, y + 10, 8, 7);
+
+            // Middle body top legs
+            g.fillRect(x - 3, y + 4, 4, 1); // Left upper
+            g.fillRect(x + 7, y + 4, 4, 1); // Right upper
+
+            // Middle body bottom legs
+            g.fillRect(x - 4, y + 9, 5, 1); // Left lower
+            g.fillRect(x + 7, y + 9, 5, 1); // Right lower
+
+            // End body legs
+            g.fillRect(x - 4, y + 14, 6, 1); // Left abdomen leg
+            g.fillRect(x + 7, y + 14, 6, 1); // Right abdomen leg
+
+            // Eyes
+            g.setColor(Color.BLACK);
+            g.fillRect(x + 2, y + 1, 2, 2); // Left eye
+            g.fillRect(x + 5, y + 1, 2, 2); // Right eye
         }
 
     }
