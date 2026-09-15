@@ -51,15 +51,15 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
         setBackground(new Color(76, 140, 80));
-        resetSimulation(20);
+        resetSimulation(10);
 
         //Add one queen ant 
         // Add one queen
         ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
 
 
-        // Trigger an update every 100 milliseconds
-        timer = new Timer(100, this);
+        // Trigger an update every 150 milliseconds
+        timer = new Timer(120, this);
         timer.start();
     }
 
@@ -71,8 +71,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
 
-            // Only consider pheromones within a 40px radius
-            if (dx < 40 && dy < 40) {
+            // Only consider pheromones within a 50px radius
+            if (dx < 50 && dy < 50) {
                 if (p.getStrength() > bestStrength) {
                     bestStrength = p.getStrength();
                     strongest = p;
@@ -128,7 +128,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 for (FoodSource food : foods) {
                     if (Math.abs(scout.getX() - food.getX()) < 15 && Math.abs(scout.getY() - food.getY()) < 15) {
                         try {
-                            int taken = food.take(5);
+                            int taken = food.take(2);
 
                             if (taken > 0) {
                                 // Placeholder transformation for now
@@ -239,9 +239,9 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
         for (Ant ant : ants) {
             if (ant instanceof ForagerAnt) {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.PINK);
             } else if (ant instanceof ScoutAnt) {
-                g.setColor(Color.BLUE);
+                g.setColor(new Color(173, 216, 230));
             } else if (ant instanceof QueenAnt) {
                 g.setColor(new Color(128, 0, 128)); // purple queen
             } else {
@@ -257,6 +257,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Ant Colony Simulation");
         SimulationPanel panel = new SimulationPanel();
+        
+        Color mutedWaterBlue = new Color(70, 130, 180);
 
         // BorderLayout so simulation sits in the center and controls on the right
         frame.setLayout(new BorderLayout());
@@ -265,10 +267,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
         // Control panel for adjusting controls
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        controlPanel.setBackground(mutedWaterBlue);
 
         // Slider to adjust ant speed
         JLabel speedLabel = new JLabel("Set Ant Speed:");
         JSlider speedSlider = new JSlider(1, 5, 2);
+        controlPanel.setBackground(mutedWaterBlue);
         speedSlider.addChangeListener(e -> panel.setAllAntSpeed(speedSlider.getValue()));
 
         // Slider to adjust Number of ants
