@@ -248,6 +248,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Ant Colony Simulation");
         SimulationPanel panel = new SimulationPanel();
+        
+        Color mutedWaterBlue = new Color(70, 130, 180);
 
         // BorderLayout so simulation sits in the center and controls on the right
         frame.setLayout(new BorderLayout());
@@ -256,10 +258,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
         // Control panel for adjusting controls
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        controlPanel.setBackground(mutedWaterBlue);
 
         // Slider to adjust ant speed
         JLabel speedLabel = new JLabel("Set Ant Speed:");
         JSlider speedSlider = new JSlider(1, 5, 2);
+        controlPanel.setBackground(mutedWaterBlue);
         speedSlider.addChangeListener(e -> panel.setAllAntSpeed(speedSlider.getValue()));
 
         // Slider to adjust Number of ants
