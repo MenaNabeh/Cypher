@@ -53,5 +53,5 @@ public abstract class Ant implements Entity {
     @Override
     public void update() {
         strategy.move(this);
-    }
+    }       
 }
