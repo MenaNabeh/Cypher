@@ -63,10 +63,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
         timer.start();
     }
 
+    // returns default none if no strongest pheromone found
     public static Pheromone getStrongestNearby(int x, int y) {
         Pheromone strongest = null;
         double bestStrength = 0;
 
+        // tracker variable to track highest pheromone intensity
         for (Pheromone p : pheromones) {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
@@ -144,7 +146,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         ants.removeAll(toRemove);
         ants.addAll(toAdd);
 
-        // replace any depleted food sources with a new food source else where
+        // Replace any depleted food sources with a new food source else where
         int removedCount = foods.size();
         foods.removeIf(FoodSource::isDepleted);
         removedCount -= foods.size();
