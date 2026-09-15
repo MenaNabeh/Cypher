@@ -63,10 +63,12 @@ public class SimulationPanel extends JPanel implements ActionListener {
         timer.start();
     }
 
+    // returns default none if no strongest pheromone found
     public static Pheromone getStrongestNearby(int x, int y) {
         Pheromone strongest = null;
         double bestStrength = 0;
 
+        // tracker variable to track highest pheromone intensity
         for (Pheromone p : pheromones) {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
@@ -153,7 +155,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         ants.removeAll(toRemove);
         ants.addAll(toAdd);
 
-        // replace any depleted food sources with a new food source else where
+        // Replace any depleted food sources with a new food source else where
         int removedCount = foods.size();
         foods.removeIf(FoodSource::isDepleted);
         removedCount -= foods.size();
@@ -176,6 +178,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         int cx = colony.getX();
         int cy = colony.getY();
 
+        // COLONY DESIGN
         // Layer 1: Largest Outer Boundary 
         g.setColor(new Color(50, 30, 10));
         g.fillRect(cx - 10, cy - 10, 40, 40);
@@ -203,6 +206,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 int y = f.getY();
                 int size = 30; // Increased overall size
 
+                // FOOD DESIGN
                 // Back triangle
                 g.setColor(new Color(230, 175, 115));
                 int[] backX = {x - 4, x + size + 4, x + (size / 2)};
@@ -237,6 +241,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
             g.fillOval(p.getX(), p.getY(), size, size);
         }
 
+        // ANTS
         for (Ant ant : ants) {
             if (ant instanceof ForagerAnt) {
                 g.setColor(Color.PINK);
@@ -250,7 +255,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
             int x = ant.getX();
             int y = ant.getY();
-
+            
+            // ANTS DESIGN
             // 1. Head
             g.fillRect(x + 2, y, 4, 3);
 
@@ -318,6 +324,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         controlPanel.add(resetButton);
         frame.add(controlPanel, BorderLayout.EAST);
 
+        // Set window size, exit program button and make it visible
         frame.setSize(550, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
