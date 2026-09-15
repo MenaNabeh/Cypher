@@ -210,8 +210,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.setColor(new Color(130, 25, 20));
                 int spotSize = 8;
                 g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize);             // Top spot near upper tip
-                g.fillOval(x + 3, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
-                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
+                g.fillOval(x + 5, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
+                g.fillOval(x + size - 13, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
                 }
         }
         // Label showing how much food is left at each source.
