@@ -11,7 +11,7 @@ public class Pheromone {
     }
 
     public void decay() {
-        strength *= 0.998;
+        strength *= 0.98;
     }
 
     public boolean isWeak() {
