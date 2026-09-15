@@ -9,14 +9,14 @@ public class FoodSource {
     private int amountRemaining;
 
     // Creates a food source with a position and a starting amount.
-    public FoodSource(int x, int y, int amountRemaining) {
+    public FoodSource(int x, int y, int amountRemaining){
         this.x = x;
         this.y = y;
         this.amountRemaining = amountRemaining;
     }
 
     // Checks if the food source has no food left.
-    public boolean isDepleted() {
+    public boolean isDepleted(){
         return amountRemaining <= 0;
     }
 
@@ -25,11 +25,11 @@ public class FoodSource {
      * Only takes as much food as available (will never go negative).
      * If food source is depleted we throw a DepletedFoodException.
      */
-    public int take(int amount) throws DepletedFoodException {
+    public int take(int amount) throws DepletedFoodException{
 
-        if (isDepleted()) {
+        if (isDepleted()){
             throw new DepletedFoodException(
-                    "Food source is depleted.");
+            "Food source is depleted.");
         }
 
         int taken = Math.min(amount, amountRemaining);
@@ -38,22 +38,22 @@ public class FoodSource {
     }
 
     // Returns food source X position.
-    public int getX() {
+    public int getX(){
         return x;
     }
 
     // Returns food source Y position.
-    public int getY() {
+    public int getY(){
         return y;
     }
 
     // Shows food source details.
     @Override
-    public String toString() {
+    public String toString(){
         return "FoodSource at (" + x + "," + y + ") remaining=" + amountRemaining;
     }
 
-    // Lets the other files check to see how much food is left.
+    // Lets other files check how much food is left.
     public int getAmountRemaining() {
         return amountRemaining;
     }
