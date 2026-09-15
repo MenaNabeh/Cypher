@@ -230,9 +230,9 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
         for (Ant ant : ants) {
             if (ant instanceof ForagerAnt) {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.PINK);
             } else if (ant instanceof ScoutAnt) {
-                g.setColor(Color.BLUE);
+                g.setColor(new Color(173, 216, 230));
             } else if (ant instanceof QueenAnt) {
                 g.setColor(new Color(128, 0, 128)); // purple queen
             } else {
