@@ -54,8 +54,10 @@ public class ForagerAnt extends Ant {
         }
 
         strategy.move(this);
-
-        SimulationPanel.addPheromone(new Pheromone(x, y));
+        
+        if(carryingFood){
+            SimulationPanel.addPheromone(new Pheromone(x, y)); // 
+        }
     }
 
     // Shows forager ant details.
