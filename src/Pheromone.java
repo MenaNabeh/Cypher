@@ -4,14 +4,14 @@ public class Pheromone {
     private int y;
     private double strength;
 
-    public Pheromone(int x, int y) {
+    public Pheromone(int x, int y, double strength) {
         this.x = x;
         this.y = y;
-        this.strength = 1.0;
+        this.strength = strength;
     }
 
     public void decay() {
-        strength *= 0.98;
+        strength *= 0.95;
     }
 
     public boolean isWeak() {

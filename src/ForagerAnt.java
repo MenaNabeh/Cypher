@@ -44,21 +44,24 @@ public class ForagerAnt extends Ant {
     }
 
     @Override
-    public void update() {
+public void update() {
 
-        // Switch strategy based on carrying food
-        if (carryingFood) {
-            setStrategy(new PheromoneFollowing());
-        } else {
-            setStrategy(new RandomMovement());
-        }
+    if (carryingFood) {
+        // Strong pheromone trail
+        SimulationPanel.addPheromone(new Pheromone(x, y,2.0));
 
-        strategy.move(this);
-        
-        if(carryingFood){
-            SimulationPanel.addPheromone(new Pheromone(x, y)); // 
-        }
+        // Head directly to colony
+        int dx = Integer.compare(homeColony.getX(), x);
+        int dy = Integer.compare(homeColony.getY(), y);
+        move(dx, dy);
+        return;
     }
+
+    // Not carrying food → search for strong trails
+    setStrategy(new PheromoneFollowing());
+    super.update();
+}
+
 
     // Shows forager ant details.
     @Override
