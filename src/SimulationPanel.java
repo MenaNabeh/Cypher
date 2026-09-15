@@ -50,7 +50,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
-        setBackground(Color.WHITE);
+        setBackground(new Color(76, 140, 80));
         resetSimulation(20);
 
         //Add one queen ant 
@@ -163,17 +163,56 @@ public class SimulationPanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Draw colony as a blue square and display current food count
-        g.setColor(Color.BLUE);
-        g.fillRect(colony.getX(), colony.getY(), 20, 20);
+        // Draw colony
+        int cx = colony.getX();
+        int cy = colony.getY();
+
+        // Layer 1: Largest Outer Boundary 
+        g.setColor(new Color(50, 30, 10));
+        g.fillRect(cx - 10, cy - 10, 40, 40);
+
+        // Layer 2: Outer Base 
+        g.setColor(new Color(80, 50, 20));
+        g.fillRect(cx - 5, cy - 5, 30, 30);
+
+        // Layer 3: Middle Ring 
+        g.setColor(new Color(130, 85, 40));
+        g.fillRect(cx, cy, 20, 20);
+
+        // Layer 4: Inner Core 
+        g.setColor(new Color(190, 140, 80));
+        g.fillRect(cx + 5, cy + 5, 10, 10);
+
+        // Display current food count text
+        g.setColor(Color.BLACK);
         g.drawString("Colony Food Stored: " + colony.getFoodStored(), 10, 20);
 
-        // Draw active food sources as green circles
-        g.setColor(Color.GREEN);
-        for (FoodSource f : foods) {
+        // Draw active food sources as layered triangles
+                for (FoodSource f : foods) {
             if (!f.isDepleted()) {
-                g.fillOval(f.getX(), f.getY(), 15, 15);
-            }
+                int x = f.getX();
+                int y = f.getY();
+                int size = 30; // Increased overall size
+
+                // 1. Back triangle
+                g.setColor(new Color(230, 175, 115));
+                int[] backX = {x - 4, x + size + 4, x + (size / 2)};
+                int[] backY = {y + size + 4, y + size + 4, y - 2};
+                g.fillPolygon(backX, backY, 3);
+
+                // Front triangle 
+                g.setColor(new Color(195, 60, 50));
+                int[] topX = {x, x + size, x + (size / 2)};
+                int[] topY = {y + size, y + size, y};
+                g.fillPolygon(topX, topY, 3);
+
+                // Pepperoni
+                g.setColor(new Color(130, 25, 20));
+                int spotSize = 8;
+                g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize);             // Top spot near upper tip
+                g.fillOval(x + 3, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
+                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
+                }
         }
         // Label showing how much food is left at each source.
         g.setColor(Color.BLACK);
