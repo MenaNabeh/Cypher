@@ -59,7 +59,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
 
         // Trigger an update every 150 milliseconds
-        timer = new Timer(150, this);
+        timer = new Timer(120, this);
         timer.start();
     }
 
@@ -71,8 +71,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
             int dx = Math.abs(p.getX() - x);
             int dy = Math.abs(p.getY() - y);
 
-            // Only consider pheromones within a 40px radius
-            if (dx < 40 && dy < 40) {
+            // Only consider pheromones within a 50px radius
+            if (dx < 50 && dy < 50) {
                 if (p.getStrength() > bestStrength) {
                     bestStrength = p.getStrength();
                     strongest = p;
@@ -119,7 +119,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 for (FoodSource food : foods) {
                     if (Math.abs(scout.getX() - food.getX()) < 15 && Math.abs(scout.getY() - food.getY()) < 15) {
                         try {
-                            int taken = food.take(5);
+                            int taken = food.take(2);
 
                             if (taken > 0) {
                                 // Placeholder transformation for now
