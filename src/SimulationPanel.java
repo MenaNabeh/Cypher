@@ -86,9 +86,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Pheromone p : pheromones) {
-            p.decay();
-        }
+        pheromones.forEach(Pheromone::decay);
+        
         pheromones.removeIf(Pheromone::isWeak);
 
         List<Ant> toAdd = new ArrayList<>();
