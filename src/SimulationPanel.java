@@ -25,9 +25,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
     // updates the speed of all ants in the simulation
     public void setAllAntSpeed(int speed) {
-        for (Ant ant : ants) {
-            ant.setSpeed(speed);
-        }
+        ants.forEach(ant -> ant.setSpeed(speed));
     }
 
     // resets the simulation to its initial state
