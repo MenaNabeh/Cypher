@@ -14,7 +14,7 @@ public abstract class Ant implements Entity {
     // The colony this ant belongs to
     protected Colony homeColony;
 
-    protected MovementStrategy strategy = new RandomMovement();
+    protected MovementStrategy strategy = ant -> ant.move((int)(Math.random() * 5) - 2, (int)(Math.random() * 5) - 2);
 
     // Sets up an ant with a starting position, speed, and home colony.
     public Ant(int x, int y, int speed, Colony homeColony) {
