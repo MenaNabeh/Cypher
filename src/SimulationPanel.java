@@ -25,9 +25,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
     // updates the speed of all ants in the simulation
     public void setAllAntSpeed(int speed) {
-        for (Ant ant : ants) {
-            ant.setSpeed(speed);
-        }
+        ants.forEach(ant -> ant.setSpeed(speed));
     }
 
     // resets the simulation to its initial state
@@ -88,9 +86,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Pheromone p : pheromones) {
-            p.decay();
-        }
+        pheromones.forEach(Pheromone::decay);
+        
         pheromones.removeIf(Pheromone::isWeak);
 
         List<Ant> toAdd = new ArrayList<>();
