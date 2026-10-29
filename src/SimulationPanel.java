@@ -303,15 +303,25 @@ public class SimulationPanel extends JPanel implements ActionListener {
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         controlPanel.setBackground(mutedWaterBlue);
 
-        // Slider to adjust ant speed
-        JLabel speedLabel = new JLabel("Set Ant Speed:");
         JSlider speedSlider = new JSlider(1, 5, 2);
-        controlPanel.setBackground(mutedWaterBlue);
-        speedSlider.addChangeListener(e -> panel.setAllAntSpeed(speedSlider.getValue()));
+        JLabel speedLabel = new JLabel("Ant Speed: " + speedSlider.getValue());
+        speedSlider.setMajorTickSpacing(1);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
+        speedSlider.addChangeListener(e -> {
+            panel.setAllAntSpeed(speedSlider.getValue());
+            speedLabel.setText("Ant Speed: " + speedSlider.getValue());
+        });
 
-        // Slider to adjust Number of ants
-        JLabel antCountLabel = new JLabel("Number of Ants:");
-        JSlider antCountSlider = new JSlider(1, 40, 20);
+        JSlider antCountSlider = new JSlider(0, 40, 20);
+        JLabel antCountLabel = new JLabel("Number of Ants: " + antCountSlider.getValue());
+        antCountSlider.setMajorTickSpacing(10);
+        antCountSlider.setMinorTickSpacing(5);
+        antCountSlider.setPaintTicks(true);
+        antCountSlider.setPaintLabels(true);
+        antCountSlider.addChangeListener(e -> {
+            antCountLabel.setText("Number of Ants: " + antCountSlider.getValue());
+        });
 
         // Reset button to reset simulation
         JButton resetButton = new JButton("Reset");
