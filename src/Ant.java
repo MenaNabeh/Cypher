@@ -14,7 +14,7 @@ public abstract class Ant implements Entity {
     // The colony this ant belongs to
     protected Colony homeColony;
 
-    protected MovementStrategy strategy = ant -> ant.move((int)(Math.random() * 5) - 2, (int)(Math.random() * 5) - 2);
+    protected MovementStrategy strategy = ant -> ant.move((int) (Math.random() * 5) - 2, (int) (Math.random() * 5) - 2);
 
     // Sets up an ant with a starting position, speed, and home colony.
     public Ant(int x, int y, int speed, Colony homeColony) {
@@ -28,6 +28,9 @@ public abstract class Ant implements Entity {
     public void move(int dx, int dy) {
         x += dx * speed;
         y += dy * speed;
+
+        x = Math.max(4, Math.min(x, SimulationPanel.getAreaWidth() - 13));
+        y = Math.max(0, Math.min(y, SimulationPanel.getAreaHeight() - 17));
     }
 
     public void setStrategy(MovementStrategy strategy) {
@@ -55,5 +58,5 @@ public abstract class Ant implements Entity {
         // All ants leave a weak pheromone trail
         SimulationPanel.addPheromone(new Pheromone(x, y, 0.3));
         strategy.move(this);
-    }       
+    }
 }

@@ -10,6 +10,17 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
     private static List<Pheromone> pheromones = new ArrayList<>();
 
+    private static int areaWidth = 400;
+    private static int areaHeight = 400;
+
+    public static int getAreaWidth() {
+        return areaWidth;
+    }
+
+    public static int getAreaHeight() {
+        return areaHeight;
+    }
+
     // Lists using Generics to hold ants and food sources
     private List<Ant> ants = new ArrayList<>();
     private List<FoodSource> foods = new ArrayList<>();
@@ -85,6 +96,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
+        areaWidth = getWidth();
+        areaHeight = getHeight();
         pheromones.forEach(Pheromone::decay);
 
         pheromones.removeIf(Pheromone::isWeak);
@@ -121,7 +134,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
             }
 
-            // Scout Logic
+            // Scout Logic - a scout that finds food becomes a forager ant carrying it
             if (ant instanceof ScoutAnt scout) {
                 for (FoodSource food : foods) {
                     if (Math.abs(scout.getX() - food.getX()) < 15 && Math.abs(scout.getY() - food.getY()) < 15) {
