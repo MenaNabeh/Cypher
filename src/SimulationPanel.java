@@ -51,10 +51,9 @@ public class SimulationPanel extends JPanel implements ActionListener {
         setBackground(new Color(76, 140, 80));
         resetSimulation(10);
 
-        //Add one queen ant 
+        // Add one queen ant
         // Add one queen
         ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
-
 
         // Trigger an update every 150 milliseconds
         timer = new Timer(120, this);
@@ -87,7 +86,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         pheromones.forEach(Pheromone::decay);
-        
+
         pheromones.removeIf(Pheromone::isWeak);
 
         List<Ant> toAdd = new ArrayList<>();
@@ -116,34 +115,21 @@ public class SimulationPanel extends JPanel implements ActionListener {
                         Ant newScout = new ScoutAnt(forager.getX(), forager.getY(), forager.speed, colony);
                         toRemove.add(forager);
                         toAdd.add(newScout);
-}
+                    }
 
                 }
-                
+
             }
 
             // Scout Logic
             if (ant instanceof ScoutAnt scout) {
                 for (FoodSource food : foods) {
                     if (Math.abs(scout.getX() - food.getX()) < 15 && Math.abs(scout.getY() - food.getY()) < 15) {
-                        try {
-                            int taken = food.take(2);
-
-                            if (taken > 0) {
-                                // Placeholder transformation for now
-                                Ant newAnt = new ForagerAnt(
-                                        scout.getX(),
-                                        scout.getY(),
-                                        scout.speed,
-                                        colony);
-
-                                toRemove.add(scout);
-                                toAdd.add(newAnt);
-
-                                System.out.println("Scout collected food and became a Forager!");
-
-                            }
-                        } catch (DepletedFoodException ignored) {
+                        ForagerAnt newForager = new ForagerAnt(scout.getX(), scout.getY(), scout.speed, colony);
+                        if (newForager.pickUpFood(food)) {
+                            toRemove.add(scout);
+                            toAdd.add(newForager);
+                            System.out.println("Scout found food and became a forager");
                         }
                     }
                 }
@@ -157,8 +143,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
         foods.removeIf(FoodSource::isDepleted);
         removedCount -= foods.size();
         for (int i = 0; i < removedCount; i++) {
-            int newX = 50 + (int)(Math.random() * 300);
-            int newY = 50 + (int)(Math.random() * 300);
+            int newX = 50 + (int) (Math.random() * 300);
+            int newY = 50 + (int) (Math.random() * 300);
             foods.add(new FoodSource(newX, newY, 10));
         }
 
@@ -176,19 +162,19 @@ public class SimulationPanel extends JPanel implements ActionListener {
         int cy = colony.getY();
 
         // COLONY DESIGN
-        // Layer 1: Largest Outer Boundary 
+        // Layer 1: Largest Outer Boundary
         g.setColor(new Color(50, 30, 10));
         g.fillRect(cx - 10, cy - 10, 40, 40);
 
-        // Layer 2: Outer Base 
+        // Layer 2: Outer Base
         g.setColor(new Color(80, 50, 20));
         g.fillRect(cx - 5, cy - 5, 30, 30);
 
-        // Layer 3: Middle Ring 
+        // Layer 3: Middle Ring
         g.setColor(new Color(130, 85, 40));
         g.fillRect(cx, cy, 20, 20);
 
-        // Layer 4: Inner Core 
+        // Layer 4: Inner Core
         g.setColor(new Color(190, 140, 80));
         g.fillRect(cx + 5, cy + 5, 10, 10);
 
@@ -197,7 +183,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         g.drawString("Colony Food Stored: " + colony.getFoodStored(), 10, 20);
 
         // Draw active food sources as layered triangles
-                for (FoodSource f : foods) {
+        for (FoodSource f : foods) {
             if (!f.isDepleted()) {
                 int x = f.getX();
                 int y = f.getY();
@@ -206,23 +192,23 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 // FOOD DESIGN
                 // Back triangle
                 g.setColor(new Color(230, 175, 115));
-                int[] backX = {x - 4, x + size + 4, x + (size / 2)};
-                int[] backY = {y + size + 4, y + size + 4, y - 2};
+                int[] backX = { x - 4, x + size + 4, x + (size / 2) };
+                int[] backY = { y + size + 4, y + size + 4, y - 2 };
                 g.fillPolygon(backX, backY, 3);
 
-                // Front triangle 
+                // Front triangle
                 g.setColor(new Color(195, 60, 50));
-                int[] topX = {x, x + size, x + (size / 2)};
-                int[] topY = {y + size, y + size, y};
+                int[] topX = { x, x + size, x + (size / 2) };
+                int[] topY = { y + size, y + size, y };
                 g.fillPolygon(topX, topY, 3);
 
                 // Pepperoni
                 g.setColor(new Color(130, 25, 20));
                 int spotSize = 8;
-                g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize);             // Top spot near upper tip
-                g.fillOval(x + 3, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
-                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
-                }
+                g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize); // Top spot near upper tip
+                g.fillOval(x + 3, y + size - 14, spotSize, spotSize); // Bottom-left spot near base
+                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize); // Bottom-right spot near base
+            }
         }
         // Label showing how much food is left at each source.
         g.setColor(Color.BLACK);
@@ -252,7 +238,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
             int x = ant.getX();
             int y = ant.getY();
-            
+
             // ANTS DESIGN
             // 1. Head
             g.fillRect(x + 2, y, 4, 3);
@@ -287,7 +273,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Ant Colony Simulation");
         SimulationPanel panel = new SimulationPanel();
-        
+
         Color mutedWaterBlue = new Color(70, 130, 180);
 
         // BorderLayout so simulation sits in the center and controls on the right

@@ -15,11 +15,14 @@ public class ForagerAnt extends Ant {
 
     /*
      * Attempts to pick up food from a food source.
-     * Takes up to 5 units if available.
-     * 
+     * Does nothing if the ant is already carrying food
+     * Returns true if the ant is carrying food afterwards
      * If the food source is depleted, a message is printed to the console.
      */
-    public void pickUpFood(FoodSource food) {
+    public boolean pickUpFood(FoodSource food) {
+        if (carryingFood) {
+            return false;
+        }
         try {
             int taken = food.take(1);
             if (taken > 0) {
@@ -28,6 +31,7 @@ public class ForagerAnt extends Ant {
         } catch (DepletedFoodException e) {
             System.out.println(this + " found nothing: " + e.getMessage());
         }
+        return carryingFood;
     }
 
     // Lets other code check if the ant is carrying food.
@@ -44,24 +48,23 @@ public class ForagerAnt extends Ant {
     }
 
     @Override
-public void update() {
+    public void update() {
 
-    if (carryingFood) {
-        // Strong pheromone trail
-        SimulationPanel.addPheromone(new Pheromone(x, y,2.0));
+        if (carryingFood) {
+            // Strong pheromone trail
+            SimulationPanel.addPheromone(new Pheromone(x, y, 2.0));
 
-        // Head directly to colony
-        int dx = Integer.compare(homeColony.getX(), x);
-        int dy = Integer.compare(homeColony.getY(), y);
-        move(dx, dy);
-        return;
+            // Head directly to colony
+            int dx = Integer.compare(homeColony.getX(), x);
+            int dy = Integer.compare(homeColony.getY(), y);
+            move(dx, dy);
+            return;
+        }
+
+        // Not carrying food → search for strong trails
+        setStrategy(new PheromoneFollowing());
+        super.update();
     }
-
-    // Not carrying food → search for strong trails
-    setStrategy(new PheromoneFollowing());
-    super.update();
-}
-
 
     // Shows forager ant details.
     @Override
