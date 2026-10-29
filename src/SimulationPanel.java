@@ -237,45 +237,55 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
         // ANTS
         for (Ant ant : ants) {
+
+            Graphics2D g2 = (Graphics2D) g.create();
+
             if (ant instanceof ForagerAnt) {
-                g.setColor(Color.PINK);
+                g2.setColor(Color.PINK);
             } else if (ant instanceof ScoutAnt) {
-                g.setColor(new Color(173, 216, 230));
+                g2.setColor(new Color(173, 216, 230));
             } else if (ant instanceof QueenAnt) {
-                g.setColor(new Color(128, 0, 128)); // purple queen
+                g2.setColor(new Color(128, 0, 128)); // purple queen
             } else {
-                g.setColor(Color.GRAY);
+                g2.setColor(Color.GRAY);
             }
 
-            int x = ant.getX();
-            int y = ant.getY();
+            // move draw start point to ant position
+            g2.translate(ant.getX(), ant.getY());
+
+            // Draw Queen twice as big as other ants.
+            if (ant instanceof QueenAnt) {
+                g2.scale(2, 2);
+            }
 
             // ANTS DESIGN
             // 1. Head
-            g.fillRect(x + 2, y, 4, 3);
+            g2.fillRect(2, 0, 4, 3);
 
             // 2. Middle Body
-            g.fillRect(x + 1, y + 4, 6, 5);
+            g2.fillRect(1, 4, 6, 5);
 
             // 3. End Body
-            g.fillRect(x, y + 10, 8, 7);
+            g2.fillRect(0, 10, 8, 7);
 
             // Middle body top legs
-            g.fillRect(x - 3, y + 4, 4, 1); // Left upper
-            g.fillRect(x + 7, y + 4, 4, 1); // Right upper
+            g2.fillRect(-3, 4, 4, 1); // Left upper
+            g2.fillRect(7, 4, 4, 1); // Right upper
 
             // Middle body bottom legs
-            g.fillRect(x - 4, y + 9, 5, 1); // Left lower
-            g.fillRect(x + 7, y + 9, 5, 1); // Right lower
+            g2.fillRect(-4, 9, 5, 1); // Left lower
+            g2.fillRect(7, 9, 5, 1); // Right lower
 
             // End body legs
-            g.fillRect(x - 4, y + 14, 6, 1); // Left abdomen leg
-            g.fillRect(x + 7, y + 14, 6, 1); // Right abdomen leg
+            g2.fillRect(-4, 14, 6, 1); // Left abdomen leg
+            g2.fillRect(7, 14, 6, 1); // Right abdomen leg
 
             // Eyes
-            g.setColor(Color.BLACK);
-            g.fillRect(x + 2, y + 1, 2, 2); // Left eye
-            g.fillRect(x + 5, y + 1, 2, 2); // Right eye
+            g2.setColor(Color.BLACK);
+            g2.fillRect(2, 1, 2, 2); // Left eye
+            g2.fillRect(5, 1, 2, 2); // Right eye
+
+            g2.dispose();
         }
 
     }
