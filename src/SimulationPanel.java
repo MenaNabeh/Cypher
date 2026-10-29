@@ -55,16 +55,14 @@ public class SimulationPanel extends JPanel implements ActionListener {
         for (int i = 0; i < antCount; i++) {
             ants.add(new ScoutAnt(200, 200, 4, colony));
         }
+
+        ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
     }
 
     // Sets up the colony, food, ants, and starts the timer
     public SimulationPanel() {
         setBackground(new Color(76, 140, 80));
         resetSimulation(10);
-
-        // Add one queen ant
-        // Add one queen
-        ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
 
         // Trigger an update every 150 milliseconds
         timer = new Timer(120, this);
