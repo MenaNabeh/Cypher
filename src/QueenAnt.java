@@ -7,13 +7,15 @@ public class QueenAnt extends Ant {
     @Override
     public void update() {
         // Queens barely move — small random wiggle
-        int dx = (int)(Math.random() * 3) - 1;
-        int dy = (int)(Math.random() * 3) - 1;
+        int dx = (int) (Math.random() * 3) - 1;
+        int dy = (int) (Math.random() * 3) - 1;
+        move(dx, dy);
 
         // Keep queen very close to colony
-        if (Math.abs(x - homeColony.getX()) < 10 &&
-            Math.abs(y - homeColony.getY()) < 10) {
-            move(dx, dy);
+        if (Math.abs(x - homeColony.getX()) > 10 || Math.abs(y - homeColony.getY()) > 10) {
+            int backX = Integer.compare(homeColony.getX(), x);
+            int backY = Integer.compare(homeColony.getY(), y);
+            move(backX, backY);
         }
     }
 
@@ -22,4 +24,3 @@ public class QueenAnt extends Ant {
         return "QueenAnt at (" + x + "," + y + ")";
     }
 }
-
