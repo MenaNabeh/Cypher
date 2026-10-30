@@ -61,7 +61,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         setBackground(new Color(76, 140, 80));
         resetSimulation(20);
 
-        // Trigger an update every 150 milliseconds
+        // Trigger an update every 120 milliseconds
         timer = new Timer(120, this);
         timer.start();
     }
@@ -233,7 +233,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
                 g.drawString(String.valueOf(f.getAmountRemaining()), f.getX(), f.getY() - 3);
             }
         }
-        // Draw pheromones (very faint red)
+        // Draw pheromones (very see-through purple)
         g.setColor(new Color(90, 20, 120, 50));
         for (Pheromone p : pheromones) {
             int size = (int) (10 * p.getStrength());
