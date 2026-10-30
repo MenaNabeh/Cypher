@@ -91,8 +91,16 @@ public class SimulationPanel extends JPanel implements ActionListener {
     // Runs every timer tick to update position and interaction logic
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        // Skip tick if window isn't on screen yet
+        if (getWidth() == 0 || getHeight() == 0) {
+            return;
+        }
+
+        // update the edges in case the window was resized
         areaWidth = getWidth();
         areaHeight = getHeight();
+
         pheromones.forEach(Pheromone::decay);
 
         pheromones.removeIf(Pheromone::isWeak);
