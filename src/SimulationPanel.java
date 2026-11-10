@@ -196,27 +196,27 @@ public class SimulationPanel extends JPanel implements ActionListener {
             if (!f.isDepleted()) {
                 int x = f.getX();
                 int y = f.getY();
-                int size = 30; // Increased overall size
+                int size = 60; // Increased overall size
 
                 // FOOD DESIGN
                 // Back triangle
                 g.setColor(new Color(230, 175, 115));
-                int[] backX = {x - 4, x + size + 4, x + (size / 2)};
-                int[] backY = {y + size + 4, y + size + 4, y - 2};
+                int[] backX = {x - 10, x + size + 10, x + (size / 2)};
+                int[] backY = {y + size + 10, y + size + 10, y - 6};
                 g.fillPolygon(backX, backY, 3);
 
                 // Front triangle 
                 g.setColor(new Color(195, 60, 50));
                 int[] topX = {x, x + size, x + (size / 2)};
-                int[] topY = {y + size, y + size, y};
+                int[] topY = {y + size + 2, y + size + 2, y + 2};
                 g.fillPolygon(topX, topY, 3);
 
                 // Pepperoni
                 g.setColor(new Color(130, 25, 20));
-                int spotSize = 8;
-                g.fillOval(x + (size / 2) - 4, y + 7, spotSize, spotSize);             // Top spot near upper tip
-                g.fillOval(x + 3, y + size - 14, spotSize, spotSize);                  // Bottom-left spot near base
-                g.fillOval(x + size - 11, y + size - 14, spotSize, spotSize);          // Bottom-right spot near base
+                int spotSize = 16;
+                g.fillOval(x + (size / 2) - 8, y + 14, spotSize, spotSize);  // Top spot
+                g.fillOval(x + 10, y + size - 20, spotSize, spotSize);       // Bottom-left spot
+                g.fillOval(x + size - 26, y + size - 20, spotSize, spotSize); // Bottom-right spot
                 }
         }
         // Label showing how much food is left at each source.
