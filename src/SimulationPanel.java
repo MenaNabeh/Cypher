@@ -58,7 +58,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
         ants.add(new QueenAnt(colony.getX(), colony.getY(), 1, colony));
 
 
-        // Trigger an update every 150 milliseconds
+        // Trigger an update every 120 milliseconds
         timer = new Timer(120, this);
         timer.start();
     }
@@ -248,31 +248,32 @@ public class SimulationPanel extends JPanel implements ActionListener {
             int y = ant.getY();
             
             // ANTS DESIGN
-            // 1. Head
-            g.fillRect(x + 2, y, 4, 3);
 
-            // 2. Middle Body
-            g.fillRect(x + 1, y + 4, 6, 5);
+            // 1. Head (larger)
+            g.fillRect(x + 6, y, 12, 12);
+
+            // 2. Middle Body (larger and connected to head)
+            g.fillRect(x + 3, y + 9, 18, 21);
 
             // 3. End Body
-            g.fillRect(x, y + 10, 8, 7);
+            g.fillRect(x, y + 27, 24, 24);
 
             // Middle body top legs
-            g.fillRect(x - 3, y + 4, 4, 1); // Left upper
-            g.fillRect(x + 7, y + 4, 4, 1); // Right upper
+            g.fillRect(x - 9, y + 12, 12, 3);
+            g.fillRect(x + 21, y + 12, 12, 3);
 
             // Middle body bottom legs
-            g.fillRect(x - 4, y + 9, 5, 1); // Left lower
-            g.fillRect(x + 7, y + 9, 5, 1); // Right lower
+            g.fillRect(x - 9, y + 24, 12, 3);
+            g.fillRect(x + 21, y + 24, 12, 3);
 
             // End body legs
-            g.fillRect(x - 4, y + 14, 6, 1); // Left abdomen leg
-            g.fillRect(x + 7, y + 14, 6, 1); // Right abdomen leg
+            g.fillRect(x - 9, y + 42, 15, 3);
+            g.fillRect(x + 18, y + 42, 15, 3);
 
             // Eyes
             g.setColor(Color.BLACK);
-            g.fillRect(x + 2, y + 1, 2, 2); // Left eye
-            g.fillRect(x + 5, y + 1, 2, 2); // Right eye
+            g.fillRect(x + 5, y + 2, 6, 6);
+            g.fillRect(x + 12, y + 2, 6, 6);
         }
 
     }
