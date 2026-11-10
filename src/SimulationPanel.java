@@ -170,21 +170,22 @@ public class SimulationPanel extends JPanel implements ActionListener {
         int cy = colony.getY();
 
         // COLONY DESIGN
-        // Layer 1: Largest Outer Boundary 
+
+        // Layer 1: Largest Outer Boundary
         g.setColor(new Color(50, 30, 10));
-        g.fillRect(cx - 10, cy - 10, 40, 40);
+        g.fillRect(cx - 30, cy - 30, 120, 120);
 
-        // Layer 2: Outer Base 
+        // Layer 2: Outer Base
         g.setColor(new Color(80, 50, 20));
-        g.fillRect(cx - 5, cy - 5, 30, 30);
+        g.fillRect(cx - 15, cy - 15, 90, 90);
 
-        // Layer 3: Middle Ring 
+        // Layer 3: Middle Ring
         g.setColor(new Color(130, 85, 40));
-        g.fillRect(cx, cy, 20, 20);
+        g.fillRect(cx, cy, 60, 60);
 
-        // Layer 4: Inner Core 
+        // Layer 4: Inner Core
         g.setColor(new Color(190, 140, 80));
-        g.fillRect(cx + 5, cy + 5, 10, 10);
+        g.fillRect(cx + 15, cy + 15, 30, 30);
 
         // Display current food count text
         g.setColor(Color.BLACK);
@@ -256,7 +257,7 @@ public class SimulationPanel extends JPanel implements ActionListener {
             g.fillRect(x + 3, y + 9, 18, 21);
 
             // 3. End Body
-            g.fillRect(x + 1, y + 27, 22, 22);
+            g.fillRect(x + 1, y + 27, 22, 16);
 
             // Middle body top legs
             g.fillRect(x - 7, y + 12, 10, 3);
@@ -267,8 +268,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
             g.fillRect(x + 21, y + 24, 12, 3);
 
             // End body legs
-            g.fillRect(x - 9, y + 42, 15, 3);
-            g.fillRect(x + 18, y + 42, 15, 3);
+            g.fillRect(x - 9, y + 38, 15, 3);
+            g.fillRect(x + 18, y + 38, 15, 3);
 
             // Eyes
             g.setColor(Color.BLACK);
