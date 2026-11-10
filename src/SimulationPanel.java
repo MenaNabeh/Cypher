@@ -250,17 +250,17 @@ public class SimulationPanel extends JPanel implements ActionListener {
             // ANTS DESIGN
 
             // 1. Head (larger)
-            g.fillRect(x + 6, y, 12, 12);
+            g.fillRect(x + 6, y + 1, 13, 13);
 
             // 2. Middle Body (larger and connected to head)
             g.fillRect(x + 3, y + 9, 18, 21);
 
             // 3. End Body
-            g.fillRect(x, y + 27, 24, 24);
+            g.fillRect(x + 1, y + 27, 22, 22);
 
             // Middle body top legs
-            g.fillRect(x - 9, y + 12, 12, 3);
-            g.fillRect(x + 21, y + 12, 12, 3);
+            g.fillRect(x - 7, y + 12, 10, 3);
+            g.fillRect(x + 21, y + 12, 10, 3);
 
             // Middle body bottom legs
             g.fillRect(x - 9, y + 24, 12, 3);
@@ -272,8 +272,8 @@ public class SimulationPanel extends JPanel implements ActionListener {
 
             // Eyes
             g.setColor(Color.BLACK);
-            g.fillRect(x + 5, y + 2, 6, 6);
-            g.fillRect(x + 12, y + 2, 6, 6);
+            g.fillRect(x + 6, y + 0, 5, 5);
+            g.fillRect(x + 14, y + 0, 5, 5);
         }
 
     }
